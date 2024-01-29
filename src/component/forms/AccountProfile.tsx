@@ -25,7 +25,7 @@ interface Props{
         username:string;
         name:string;
         bio:string;
-        image:string;
+        image:any;
     };
     btnTitle:string;
 }

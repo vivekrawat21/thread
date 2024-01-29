@@ -1,11 +1,19 @@
 import { AccountProfile } from "@/component/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs";
+interface user{
+    id:string
+    objectId:string
+    username:string
+    bio:string
+    image:string
+    name:string
+}
 async function Page() {
     const user = await currentUser();  //This is a function from the clerk...
     
     const userInfo = {};
-    const userData = {
-        id:user?.id,  //id of the current logged in user and the ._id is the object id in the database
+    const userData:user = {
+        id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the database
         objectId:userInfo?._id||"",
        username: userInfo?.username || user?.username,
        name: userInfo?.name || user?.firstName ||"",
