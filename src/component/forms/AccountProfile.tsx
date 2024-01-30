@@ -74,6 +74,8 @@ export const AccountProfile = ({user,btnTitle}:Props) => {
 
             />
         )
+        //todo:
+        //adding the usename field to the clerk api
            :
            (
             <Image 
