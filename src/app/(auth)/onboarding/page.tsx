@@ -14,7 +14,7 @@ async function Page() {
     const userInfo = {};
     const userData:user = {
         id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the database
-        objectId:userInfo?._id||"",
+       objectId:userInfo?._id||"",
        username: userInfo?.username || user?.username,
        name: userInfo?.name || user?.firstName ||"",
        bio :userInfo?.bio ||"",
