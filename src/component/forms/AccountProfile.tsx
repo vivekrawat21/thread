@@ -18,6 +18,8 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { useRouter, usePathname } from "next/navigation";
+import { updateUser } from "@/lib/actions/user.actions";
 interface Props {
   user: {
     id: string;
@@ -35,6 +37,8 @@ export const AccountProfile = ({ user, btnTitle }: Props) => {
   const [files, setFiles] = React.useState<File[]>([]);
   const {startUpload} = useUploadThing("media"); //This is the file router that we have created in the uploadthing/core.ts file
 
+  const router = useRouter();
+  const path = usePathname();
 
   const form = useForm({
     resolver: zodResolver(userValidiation), //This package simplifies the work with form
@@ -68,7 +72,22 @@ export const AccountProfile = ({ user, btnTitle }: Props) => {
     console.log(values);
 
     //TODO: Update user profile in database
+    await updateUser({
+      userId: user.id,
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: path,
+    });
+    if (path === "/profile/edit") {
+     router.back();
+    }
+    else{
+      router.push("/");
+    }
   }
+  
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
