@@ -1,5 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { fetchUser } from "@/lib/actions/user.actions";
+import PostThread from "@/component/forms/PostThread";
 async function page() {
   const user = await currentUser();
 
@@ -7,12 +9,19 @@ async function page() {
     return null; //clerk will automatically redirect to login
   }
   //TODO: Add your own logic here
-//   const userInfo = await fetchUser(id:userId); 
+  const userInfo = await fetchUser(user.id);
+  console.log(userInfo._id);
+  if (!userInfo?.onboarded) {
+    return redirect("/onboarding");
+  }
+ 
+
 
   return (
-    <div>
+    <>
       <h1 className="head-text">Create Thread</h1>
-    </div>
+      <PostThread userId = {userInfo._id} />
+    </>
   );
 }
 export default page;

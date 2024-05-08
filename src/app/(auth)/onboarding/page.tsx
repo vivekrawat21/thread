@@ -1,4 +1,5 @@
 import { AccountProfile } from "@/component/forms/AccountProfile";
+import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 interface user{
     id:string
@@ -10,8 +11,9 @@ interface user{
 }
 async function Page() {
     const user = await currentUser();  //This is a function from the clerk...
-    
-    const userInfo = {};
+    const dbuser = await fetchUser(user?.id||"");
+
+    const userInfo ={};
     const userData:user = {
         id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the database
        objectId:userInfo?._id||"",

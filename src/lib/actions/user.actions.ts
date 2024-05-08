@@ -26,7 +26,7 @@ export async function updateUser(
     connectToDB();
     // Update user
  try {
-      await User.findOneAndUpdate({
+      const user = await User.findOneAndUpdate({
        id:userId
       },
       {
@@ -40,10 +40,23 @@ export async function updateUser(
        upsert:true //update and insert if not found
    }
       );
+      console.log(user);
       if(path === '/profile/edit'){
        revalidatePath(path);
       }
  } catch (error:any) {
     throw new Error('failed to update and create user: ${error}')
  }
+}
+
+export async function fetchUser(userId:string) {
+  try {
+      connectToDB();
+      // Fetch user
+      return await User.findOne({id:userId});
+  
+  } catch (error:any) {
+      throw new Error('failed to fetch user: ${error}')
+    
+  }
 }
