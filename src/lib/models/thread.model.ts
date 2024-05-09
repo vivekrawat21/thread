@@ -6,16 +6,16 @@ const threadSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Author:{
+    author:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true ,
     },
     
     community:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Community",
-        required: true
+        // required: true
     },
     createdAt:{
         type: Date,

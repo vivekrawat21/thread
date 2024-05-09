@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
+import { json } from "stream/consumers";
+import { stat } from "fs";
 
 interface Params {
     userId:string;
@@ -53,7 +55,10 @@ export async function fetchUser(userId:string) {
   try {
       connectToDB();
       // Fetch user
-      return await User.findOne({id:userId});
+      const user =  await User.findOne({id:userId});
+      console.log(user);
+      return user;
+      
   
   } catch (error:any) {
       throw new Error('failed to fetch user: ${error}')

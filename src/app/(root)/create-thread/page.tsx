@@ -14,13 +14,14 @@ async function page() {
   if (!userInfo?.onboarded) {
     return redirect("/onboarding");
   }
+  console.log(userInfo.username);
  
-
+const Id = JSON.parse(JSON.stringify(userInfo._id));
 
   return (
     <>
       <h1 className="head-text">Create Thread</h1>
-      <PostThread userId = {userInfo._id} />
+      <PostThread userId = {Id} />
     </>
   );
 }

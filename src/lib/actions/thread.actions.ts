@@ -20,10 +20,9 @@ export async function createThread({ text, author, communityId, path }: Params) 
      const createThread = await Thread.create({
          text,
          author,
-         community: null,
-         path
+       community: communityId,
      })
- 
+     console.log(createThread);
      // update the user model
  
      const user = await User.findByIdAndUpdate(author, {
@@ -31,9 +30,10 @@ export async function createThread({ text, author, communityId, path }: Params) 
              threads: createThread._id
          }
      })
-     console.log(user.username);
-     revalidatePath(path);
+     //  console.log(user.username);
+
+     revalidatePath(path); //for revalidation of the path immediately it will refetch the path
    } catch (error: any) {
-     throw new Error("Error in creating thread", error.message);
+     throw new Error("Error in creating thread: " + error.message);
    }
 }

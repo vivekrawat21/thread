@@ -25,7 +25,7 @@ function PostThread({userId}: {userId:string}) {
   const router = useRouter();
   const path = usePathname();
   const onSubmit = async (values: z.infer<typeof threadValidiation>) => {
-    await createThread({
+    const thread = await createThread({
       text: values.thread,
       author: values.accountId,
       communityId: null,
@@ -34,6 +34,7 @@ function PostThread({userId}: {userId:string}) {
     router.push("/");
   };
 
+  console.log()
   const form = useForm({
     resolver: zodResolver(threadValidiation), //This package simplifies the work with form
     defaultValues: {
