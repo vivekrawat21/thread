@@ -5,7 +5,8 @@ import { currentUser } from "@clerk/nextjs";
 import ThreadCard from "@/component/cards/ThreadCard";
 export default async function Home() {
   const result = await fetchPosts(1,30);
-  console.log(result);
+ 
+  // console.log(result.posts)
   const user = await currentUser();
   return (
     <>

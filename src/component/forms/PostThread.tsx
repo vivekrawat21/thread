@@ -34,7 +34,7 @@ function PostThread({userId}: {userId:string}) {
     router.push("/");
   };
 
-  console.log()
+
   const form = useForm({
     resolver: zodResolver(threadValidiation), //This package simplifies the work with form
     defaultValues: {

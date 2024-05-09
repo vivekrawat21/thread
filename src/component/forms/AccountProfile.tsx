@@ -70,7 +70,7 @@ export const AccountProfile = ({ user, btnTitle }: Props) => {
         values.profile_photo = imageRes[0].url;
       }
     }
-    console.log(values);
+    // console.log(values);
 
     //TODO: Update user profile in database
     await updateUser({

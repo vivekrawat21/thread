@@ -40,7 +40,7 @@ export async function updateUser(
        upsert:true //update and insert if not found
    }
       );
-      console.log(user);
+    //   console.log(user);
       if(path === '/profile/edit'){
        revalidatePath(path);
       }
@@ -54,7 +54,7 @@ export async function fetchUser(userId:string) {
       connectToDB();
       // Fetch user
       const user =  await User.findOne({id:userId});
-      console.log(user);
+    //   console.log(user);
       return user;
 
   

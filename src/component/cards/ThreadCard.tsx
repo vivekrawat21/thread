@@ -34,8 +34,9 @@ const ThreadCard = ({
   community,
   comments,
 }: Props) => {
+  // console.log(author.name);
   return (
-    <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
+    <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7 mb-5">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
@@ -50,7 +51,7 @@ const ThreadCard = ({
             <div className="thread-card_bar" />
           </div>
           <div className="flex w-full flex-col">
-            <Link href={"/profile/${author.id}"} className="w-fit">
+            <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="cursor-pointer text-base-semibold text-light-1">
                 {author.name}
               </h4>
@@ -59,30 +60,30 @@ const ThreadCard = ({
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
                 <Image
-                  src="assets/heart-gray.svg"
-                  alt="heart"
+                  src="assets/heart-filled.svg"
+                  alt="heart-filled"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
                 />
                 <Link href={`/thread/${id}`}>
                   <Image
-                    src="assets/reply-gray.svg"
-                    alt="heart"
+                    src="assets/reply.svg"
+                    alt="reply"
                     width={24}
                     height={24}
                     className="cursor-pointer object-contain"
                   />
                 </Link>
                 <Image
-                  src="assets/repost-gray.svg"
-                  alt="heart"
+                  src="assets/repost.svg"
+                  alt="repost"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
                 />
                 <Image
-                  src="assets/share-gray.svg"
+                  src="assets/share.svg"
                   alt="heart"
                   width={24}
                   height={24}
