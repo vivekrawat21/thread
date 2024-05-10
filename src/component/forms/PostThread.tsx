@@ -24,6 +24,7 @@ import { createThread } from "@/lib/actions/thread.actions";
 function PostThread({userId}: {userId:string}) {
   const router = useRouter();
   const path = usePathname();
+  
   const onSubmit = async (values: z.infer<typeof threadValidiation>) => {
     const thread = await createThread({
       text: values.thread,
