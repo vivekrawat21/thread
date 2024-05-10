@@ -33,6 +33,7 @@ const ThreadCard = ({
   createdAt,
   community,
   comments,
+  isComment = undefined,
 }: Props) => {
   // console.log(author.name);
   return (
@@ -88,9 +89,15 @@ const ThreadCard = ({
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  //3:13:550
+                  
                 />
               </div>
+          {/* A thread is a comment and a comment is a thread */}
+          {isComment && comments.length > 0 && (
+            <Link href={`/thread/${id}`}>
+              <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
+              </Link>
+          )}
             </div>
           </div>
         </div>
