@@ -46,9 +46,9 @@
             </div>
             {/* {TODO COMMUNITY} */}
         <p className='mt-6 max-w-lg text-base-regular text-light-2'>{bio}</p>
-        <div
+        {/* <div
         className='mt-12 h-0.5 w-full bg-gray-1'
-        />
+        /> */}
     
         
 

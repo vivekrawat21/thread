@@ -3,6 +3,9 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
+import path from "path";
+import page from "@/app/(root)/create-thread/page";
+import { FilterQuery, SortOrder } from "mongoose";
 
 interface Params {
     userId:string;
@@ -63,3 +66,86 @@ export async function fetchUser(userId:string) {
     
   }
 }
+
+
+export async function fetchUserPosts(userId:string) {
+  connectToDB();
+    try {
+      
+      const thread = await User.findOne({id:userId}).populate(
+        {
+          path:'threads',
+          model:'Thread',
+          populate:{
+            path:'children',
+            model:'Thread',
+            populate:{
+            path:'author',
+            model:'User',
+            select:'id username name image',
+            }
+          }
+          
+        }
+     
+      );
+      return thread;
+       
+
+    }catch (error:any) {
+      throw new Error('failed to fetch user posts: ${error}')
+    }
+ }
+
+export async function fetchUsers({ 
+  userId:userId,
+  searchString:searchString,
+  pageNumber:pageNumber,
+  pageSize:pageSize,
+  sortBy = "desc",
+
+
+}:
+{
+  userId:string;
+  searchString:string;
+  pageNumber:number;
+  pageSize:number;
+  sortBy:SortOrder;
+}) {
+  connectToDB();
+  try {
+    const skipAmount = (pageNumber-1) * pageSize;
+    const regex = new RegExp(searchString, 'i');
+    const query:FilterQuery<typeof User> = {
+      id:{$ne:userId},
+    }
+    if(searchString.trim() !== ''){
+      query.$or = [
+        {username : {$regex:regex}},
+        {name:{$regex:regex}}
+      ]
+    }
+
+  const sortOptions = {createdAt:sortBy};
+
+  const userQuery =  User.find(query).sort(sortOptions).skip(skipAmount).limit(pageSize);
+
+  const totalUsersCount =await User.countDocuments(query);
+   
+  const users = await userQuery.exec();
+
+  const insNext = totalUsersCount > skipAmount + users.length;
+
+  return {
+    users,
+    insNext
+  }
+  } catch (error:any) {
+    throw new Error('failed to fetch users: ${error}')
+  }
+}
+
+
+
+
