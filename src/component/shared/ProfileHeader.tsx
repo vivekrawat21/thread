@@ -27,7 +27,7 @@
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <div className='relative h-20 w-20 object-cover'>
-                  <Image src={imgUrl} alt="profile" fill className="rounded-full object-cover shadow-2xl"width={50} height={50}
+                  <Image src={imgUrl} alt="profile"  className="rounded-full object-cover shadow-2xl"width={50} height={50}
                   />
                 </div>
 

@@ -1,3 +1,4 @@
+import { currentUser } from "@clerk/nextjs";
 
 export const sidebarLinks = [
     {

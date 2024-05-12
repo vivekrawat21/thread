@@ -13,10 +13,12 @@ const Page = async ({params}:{params:{id:string}}) => {
   if (!user) {
     return null;
   }
+  
 
+  
   //TODO: Add your own logic here
   const userInfo = await fetchUser(params.id);
-  // console.log(userInfo._id);
+
   console.log(userInfo);
   if (!userInfo?.onboarded) {
     return redirect("/onboarding");
@@ -29,7 +31,7 @@ const Page = async ({params}:{params:{id:string}}) => {
         authUserId={user?.id}
         name={userInfo.name}
         username={userInfo.username}
-        imgUrl={userInfo.imgUrl}
+        imgUrl={userInfo?.image}
         bio={userInfo.bio}
       />
 
