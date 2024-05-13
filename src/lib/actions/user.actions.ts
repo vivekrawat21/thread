@@ -7,6 +7,7 @@ import path from "path";
 import page from "@/app/(root)/create-thread/page";
 import { FilterQuery, SortOrder } from "mongoose";
 import Thread from "../models/thread.model";
+import { threadId } from "worker_threads";
 
 interface Params {
     userId:string;
@@ -156,18 +157,28 @@ export async function getActivity (userId: string) {
     connectToDB();
 
     //find all the threads created by the user
-    const userThreads = await User.findOne({author:userId})
+    const userThreads = await Thread.find({author:userId})
+  console.log(userThreads[0].children)
 
     // collect all the child thread ids (replies) from the 'children' field
-   const childThreadIds = userThreads.reduce((acc: string | any[],userThread: { children: any; } ) => {
+   const childThreadIds = userThreads.reduce((acc,userThread) => {
       return acc.concat(userThread.children)
     
-   }) //collecting all the comment we get from the child thread ids
+   },[]) //collecting all the comment we get from the child thread ids
 
-  //  const replies = await Thread.find({id:{$in:childThreadIds}}).populate({
+ 
+  const replies = await Thread.find({_id:{$in:childThreadIds},
+    author:{$ne:userId},})
+    .populate({
+      path:'author',
+      model:'User',
+      select:'name image _id',
+    
+  })
+return replies;
 
   }
   catch (error:any) {
-    throw new Error('failed to fetch activity: ${error}')
+    throw new Error(`failed to fetch activity: ${error.message}`)
   }
 }
