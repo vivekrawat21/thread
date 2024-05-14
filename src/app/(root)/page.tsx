@@ -9,7 +9,7 @@ export default async function Home() {
 
   
   const user = await currentUser();
-  const userInfo = await fetchUser(user?.id||"");
+  const userInfo:any = await fetchUser(user?.id||"");
   if (!userInfo?.onboarded) {
     return redirect("/onboarding");
   }
