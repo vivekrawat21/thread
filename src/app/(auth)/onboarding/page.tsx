@@ -13,11 +13,10 @@ interface user{
 
 async function Page() {
     const user = await currentUser();  //This is a function from the clerk...
-    const userInfo = await fetchUser(user?.id||"");
-   
+    const userInfo :any= await fetchUser(user?.id ?? ""); // Add nullish coalescing operator to provide a default value of an empty string if user's id is undefined
 
     const userData:user = {
-        id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the database
+        id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the data
        objectId:userInfo?._id||"",
        username: userInfo?.username || user?.username,
        name: userInfo?.name || user?.firstName ||"",
