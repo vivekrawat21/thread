@@ -7,7 +7,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 export default async function Home() {
   const result = await fetchPosts(1,30);
 
-  // console.log(result.posts)
+  
   const user = await currentUser();
   const userInfo = await fetchUser(user?.id||"");
   if (!userInfo?.onboarded) {
@@ -21,7 +21,7 @@ export default async function Home() {
       {result.posts.map((post:any) => (
         <ThreadCard
           key={post._id}
-          id={post._id}  // console.log("hellp"+author.id);
+          id={post._id} 
           currentUserId= {user?.id||""}
           parentId={post.parentId}
           content = {post.text}

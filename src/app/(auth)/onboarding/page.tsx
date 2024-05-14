@@ -14,7 +14,7 @@ interface user{
 async function Page() {
     const user = await currentUser();  //This is a function from the clerk...
     const userInfo = await fetchUser(user?.id||"");
-    // console.log(userInfo.username);
+   
 
     const userData:user = {
         id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the database

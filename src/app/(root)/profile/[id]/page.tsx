@@ -19,8 +19,6 @@ const Page = async ({params}:{params:{id:string}}) => {
   
   //TODO: Add your own logic here
   const userInfo = await fetchUser(params.id);
-
-  console.log(userInfo);
   if (!userInfo?.onboarded) {
     return redirect("/onboarding");
   }

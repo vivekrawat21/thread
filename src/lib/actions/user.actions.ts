@@ -45,7 +45,6 @@ export async function updateUser(
        upsert:true //update and insert if not found
    }
       );
-    //   console.log(user);
       if(path === '/profile/edit'){
        revalidatePath(path);
       }
@@ -56,10 +55,10 @@ export async function updateUser(
 
 export async function fetchUser(userId:string) {
   try {
-      connectToDB();
+  
       // Fetch user
-      const user =  await User.findOne({id:userId});
-    //   console.log(user);
+      const user =  await User.findOne({id:userId}).lean();
+      connectToDB();
       return user;
 
   
@@ -158,7 +157,6 @@ export async function getActivity (userId: string) {
 
     //find all the threads created by the user
     const userThreads = await Thread.find({author:userId})
-  console.log(userThreads[0].children)
 
     // collect all the child thread ids (replies) from the 'children' field
    const childThreadIds = userThreads.reduce((acc,userThread) => {

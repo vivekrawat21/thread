@@ -35,7 +35,7 @@ const ThreadCard = ({
   comments,
   isComment = undefined,
 }: Props) => {
-  // console.log("hellp"+author.id);
+
   return (
     <article className={`flex w-full flex-col rounded-xl ${isComment? 'px-0 xs:px-7 mb-4':'bg-dark-2 p-7 mb-10'}`}>
       <div className="flex items-start justify-between">
