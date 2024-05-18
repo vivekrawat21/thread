@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter, usePathname } from "next/navigation";
+import { useOrganization } from "@clerk/nextjs";
+
 
 // import { updateUser } from "@/lib/actions/user.actions";
 
@@ -24,16 +26,21 @@ import { createThread } from "@/lib/actions/thread.actions";
 function PostThread({userId}: {userId:string}) {
   const router = useRouter();
   const path = usePathname();
+  const organization = useOrganization();
   
   const onSubmit = async (values: z.infer<typeof threadValidiation>) => {
-    const thread = await createThread({
-      text: values.thread,
-      author: values.accountId,
-      communityId: null,
-      path,
-    });
+    if (!organization) {
+      const thread = await createThread({
+        text: values.thread,
+        author: values.accountId,
+        communityId: organization?organization.id: null,
+        path,
+      });
+      
+    } 
     router.push("/");
-  };
+    };
+    
 
 
   const form = useForm({

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
-import path from "path";
+import Community from "../models/community.model";
 
 
 interface Params {
@@ -18,11 +18,12 @@ interface Params {
 export async function createThread({ text, author, communityId, path }: Params) {
    try {
      connectToDB();
+     const communityIdObject =await Community.findById({id :communityId},{_id:1});
  
      const createThread = await Thread.create({
          text,
          author,
-       community: communityId,
+       community: communityIdObject|| null,
      })
      // update the user model
  
@@ -31,7 +32,10 @@ export async function createThread({ text, author, communityId, path }: Params) 
              threads: createThread._id
          }
      })
-   
+   if(communityIdObject){
+      //update the community model
+      await Community.findByIdAndUpdate(communityIdObject,{$push: {threads: createThread._id},})
+   }
 
      revalidatePath(path); //for revalidation of the path immediately it will refetch the path
    } catch (error: any) {

@@ -1,4 +1,3 @@
-// 'use client'
 import { fetchPosts } from "@/lib/actions/thread.actions";
 import { currentUser } from "@clerk/nextjs";
 import ThreadCard from "@/component/cards/ThreadCard";

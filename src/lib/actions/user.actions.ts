@@ -3,11 +3,8 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
-import path from "path";
-import page from "@/app/(root)/create-thread/page";
 import { FilterQuery, SortOrder } from "mongoose";
 import Thread from "../models/thread.model";
-import { threadId } from "worker_threads";
 
 interface Params {
     userId:string;
@@ -146,6 +143,7 @@ export async function fetchUsers({
     throw new Error('failed to fetch users: ${error}')
   }
 }
+// Trying to resolve some errors
 
 
 
