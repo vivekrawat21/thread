@@ -16,25 +16,31 @@ interface Params {
 }
 
 export async function createThread({ text, author, communityId, path }: Params) {
+console.log(communityId)
+connectToDB();
    try {
-     connectToDB();
-     const communityIdObject =await Community.findById({id :communityId},{_id:1});
+    const  communityIdObject =await Community.findOne(
+       {id :communityId},
+       { _id:1 }
+      );
+   
+     console.log("community id object"+communityIdObject)
  
-     const createThread = await Thread.create({
+     const createdThread = await Thread.create({
          text,
          author,
-       community: communityIdObject|| null,
+        community: communityIdObject || null,
      })
      // update the user model
  
      const user = await User.findByIdAndUpdate(author, {
          $push: {
-             threads: createThread._id
+             threads: createdThread._id
          }
      })
    if(communityIdObject){
       //update the community model
-      await Community.findByIdAndUpdate(communityIdObject,{$push: {threads: createThread._id},})
+      await Community.findByIdAndUpdate(communityIdObject,{$push: {threads: createdThread._id},});
    }
 
      revalidatePath(path); //for revalidation of the path immediately it will refetch the path

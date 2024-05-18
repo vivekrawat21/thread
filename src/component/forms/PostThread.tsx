@@ -22,24 +22,14 @@ import { useOrganization } from "@clerk/nextjs";
 
 import { threadValidiation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
+import { Organization } from "@clerk/nextjs/server";
 
 function PostThread({userId}: {userId:string}) {
   const router = useRouter();
   const path = usePathname();
-  const organization = useOrganization();
+  const {organization} = useOrganization();
   
-  const onSubmit = async (values: z.infer<typeof threadValidiation>) => {
-    if (!organization) {
-      const thread = await createThread({
-        text: values.thread,
-        author: values.accountId,
-        communityId: organization?organization.id: null,
-        path,
-      });
-      
-    } 
-    router.push("/");
-    };
+  
     
 
 
@@ -50,6 +40,17 @@ function PostThread({userId}: {userId:string}) {
       accountId: userId,
     },
   });
+
+  const onSubmit = async (values: z.infer<typeof threadValidiation>) => {
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: organization?organization.id : null,
+      path,
+    });
+    
+     router.push("/");
+  };
 
   return (
     <>
