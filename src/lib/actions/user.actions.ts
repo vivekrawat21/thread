@@ -54,7 +54,7 @@ export async function fetchUser(userId:string) {
   try {
   
       // Fetch user
-      const user =  await User.findOne({id:userId}).lean();
+      const user =  await User.findOne({id:userId});
       connectToDB();
       return user;
 
