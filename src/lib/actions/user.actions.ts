@@ -48,7 +48,7 @@ export async function updateUser(
  } catch (error:any) {
     throw new Error('failed to update and create user: ${error}')
  }
-}//
+}
 
 export async function fetchUser(userId:string) {
   try {
