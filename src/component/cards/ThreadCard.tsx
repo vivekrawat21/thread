@@ -16,7 +16,7 @@ interface Props {
     id: string;
     name: string;
     image: string;
-  } | null;
+  } ;
   comments: {
     author: {
       image: string;
@@ -36,7 +36,6 @@ const ThreadCard = ({
   comments,
   isComment = undefined,
 }: Props) => {
-
   return (
     <article className={`flex w-full flex-col rounded-xl ${isComment? 'px-0 xs:px-7 mb-4':'bg-dark-2 p-7 mb-10'}`}>
       <div className="flex items-start justify-between">
@@ -105,6 +104,7 @@ const ThreadCard = ({
         {/* Delete thread */}
         {/* Show comment logos */}
         {!isComment && community &&(
+          
           <Link href={`/communities/${community.id}`} className="mt-5 flex items-center">
             <p className="text-subtle-medium text-gray-1">
               {formatDateString(createdAt)}

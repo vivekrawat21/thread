@@ -51,7 +51,6 @@ connectToDB();
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
 
-
   //fetch the post that have no parents
   //calculate the number of posts to skip 
   const skipAmount = (pageNumber - 1) * pageSize;
@@ -60,7 +59,9 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     .limit(pageSize)
     .populate({ 
       path: "author", model: User })
-      .populate(
+    .populate({ 
+      path: "community", model: Community }) // Add this line
+    .populate(
       {
         path: "children",
         populate: {
