@@ -43,9 +43,9 @@ if(!result){
             }
             createdAt={thread.createdAt}
             community={
-                accountType === 'Community'
-                ? {name: result.name, id: result.id, image: result.image}
-                : thread.community
+                accountType === 'User'
+                ? thread.community
+                : {name: result.name, id: result.id, image: result.image}
             }
             comments={thread.children}
             isComment={false}

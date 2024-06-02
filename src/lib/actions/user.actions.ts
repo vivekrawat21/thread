@@ -74,20 +74,27 @@ export async function fetchUserPosts(userId:string) {
         {
           path:'threads',
           model:'Thread',
-          populate:{
-            path:'children',
-            model:'Thread',
-            populate:{
-            path:'author',
-            model:'User',
-            select:'id username name image',
+          populate:[
+            {
+              path:'children',
+              model:'Thread',
+              populate:{
+                path:'author',
+                model:'User',
+                select:'id username name image',
+              }
+            },
+            {
+              path:'community', // Add this block
+              model:'Community',
+              select:'id name image',
             }
-          }
-          
+          ]
         }
-     
       );
+      
       return thread;
+
        
 
     }catch (error:any) {
