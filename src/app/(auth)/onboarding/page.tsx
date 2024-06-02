@@ -2,6 +2,7 @@
 import { AccountProfile } from "@/component/forms/AccountProfile";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 interface user{
     id:string
     objectId:string
@@ -12,16 +13,23 @@ interface user{
 }
 
 async function Page() {
-    const user = await currentUser();  //This is a function from the clerk...
-    const userInfo :any= await fetchUser(user?.id ?? ""); // Add nullish coalescing operator to provide a default value of an empty string if user's id is undefined
+    const user =  await currentUser();  //This is a function from the clerk...
+    if(!user){
+        return null;
+    }
+
+    const userInfo = await fetchUser(user?.id);
+    if (userInfo?.onboarded) {
+        return redirect("/");
+    }
 
     const userData:user = {
         id:user?.id||"",  //id of the current logged in user and the ._id is the object id in the data
        objectId:userInfo?._id||"",
-       username: userInfo?.username || user?.username,
-       name: userInfo?.name || user?.firstName ||"",
-       bio :userInfo?.bio ||"",
-       image: userInfo?.image || user?.imageUrl,
+       username:userInfo? userInfo?.username : user?.username,
+       name: userInfo ?userInfo?.name  :user?.firstName ,
+       bio :userInfo ? userInfo?.bio :"",
+       image: userInfo ? userInfo?.image : user?.imageUrl,
 
     }
     const data = JSON.parse(JSON.stringify(userData));

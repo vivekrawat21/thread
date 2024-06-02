@@ -5,7 +5,8 @@
         name: string,
         username: string,
         imgUrl: string,
-        bio: string
+        bio: string,
+        type?: 'User' | 'Community';
         
     
  }
@@ -17,7 +18,8 @@
         name,
         username,
         imgUrl,
-        bio
+        bio,
+        type,
         }:Props
  ) => {
   return (
@@ -46,12 +48,6 @@
             </div>
             {/* {TODO COMMUNITY} */}
         <p className='mt-6 max-w-lg text-base-regular text-light-2'>{bio}</p>
-        {/* <div
-        className='mt-12 h-0.5 w-full bg-gray-1'
-        /> */}
-    
-        
-
     </div>
   )
 }

@@ -31,7 +31,7 @@ const Page = async () => {
         userId: user.id,
         searchString: "",
         pageNumber: 1,
-        pageSize: 125,
+        pageSize: 25,
         sortBy: "desc",
     }
     );
